@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do You Love Me?</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; padding: 20px; background-color: #ffe4e1; }
+        .box { background: white; padding: 20px; border-radius: 10px; display: inline-block; box-shadow: 0 0 10px rgba(0,0,0,0.2); }
+        button { padding: 10px 20px; margin: 10px; border: none; cursor: pointer; border-radius: 5px; }
+        .yes { background: green; color: white; }
+        .no { background: red; color: white; }
+    </style>
+</head>
+<body>
+
+    <div class="box" id="main">
+        <h2>Do you love me, Sagu baby? ❤️</h2>
+        <button class="yes" onclick="playMusic()">Start Music & Answer Yes</button>
+        <button class="no" onclick="playMusic(); loveNo();">No</button>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="https://dl.dropboxusercontent.com/scl/fi/57pyl3tyukhs00ktlxocf/Shubh-One-Love-Official-Audio.mp3?rlkey=bdvo6ovkps23c6xwbskua8zxx&st=v9e6y965" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        let noCount = 0;
+        let musicPlayed = false;
+        
+        function playMusic() {
+            if (!musicPlayed) {
+                document.getElementById('bg-music').play();
+                musicPlayed = true; // To prevent playing multiple times
+            }
+            loveYes();
+        }
+
+        function loveYes() {
+            document.getElementById("main").innerHTML = `
+                <h2>How many percent do you love me? 😘</h2>
+                <select id="percent">
+                    ${Array.from({length: 100}, (_, i) => `<option value="${i+1}">${i+1}%</option>`).join('')}
+                    <option value="infinity">∞ (Infinity)</option>
+                </select>
+                <br><br>
+                <button class="yes" onclick="checkLove()">Submit</button>
+            `;
+        }
+
+        function checkLove() {
+            let value = document.getElementById("percent").value;
+            if (value == "infinity") {
+                finalMessage();
+            } else {
+                document.getElementById("main").innerHTML = `
+                    <h2>Aap mujhse sirf ${value}% pyar karti ho? 😭</h2><br>
+                    <button class="yes" onclick="loveYes()">Nahi baby, main aapse bahut pyar karti hoon! ❤️</button>
+                `;
+            }
+        }
+
+        function finalMessage() {
+            document.getElementById("main").innerHTML = `
+                <h2>Are wah! Aap mujhse etna sara pyar karti ho, Sagu baby! 💖🥰</h2>
+                <h2>I love you, Sagu baby! ❤️</h2>
+                <h2>Ek baat kahoon? Main aap se bahut pyar karta hoon! 💖</h2>
+                <button class="yes" onclick="loveYouToo()">Yes, main bhi aap se bahut pyar karti hoon! ❤️</button>
+            `;
+        }
+
+        function loveYouToo() {
+            document.getElementById("main").innerHTML = `
+                <h2>Hamari kahani sabse khaas hai! 💖  baby, I love you too! ❤️</h2>
+            `;
+        }
+
+        function loveNo() {
+            noCount++;
+            if (noCount < 10) {
+                document.getElementById("main").innerHTML = `
+                    <h2>Are you sure? 🥺</h2>
+                    <button class="yes" onclick="confirmationYes()">Yes</button>
+                    <button class="no" onclick="backToStart()">No</button>
+                `;
+            } else {
+                document.getElementById("main").innerHTML = `<h2>Ab no ka option khatam ho gaya! 🤣</h2>`;
+            }
+        }
+
+        function confirmationYes() {
+            document.getElementById("main").innerHTML = `
+                <h2>Socho lo, mera jaisa koi nahi milega aapko! 😢</h2>
+                <button class="yes" onclick="loveYes()">Haan baby, main aapse bahut pyar karti hoon ❤️</button>
+            `;
+        }
+
+        function backToStart() {
+            document.getElementById("main").innerHTML = `
+                <h2>Do you love me, Sagu baby? ❤️</h2>
+                <button class="yes" onclick="playMusic()">Yes</button>
+                <button class="no" onclick="playMusic(); loveNo();">No</button>
+            `;
+        }
+    </script>
+
+</body>
+</html>
